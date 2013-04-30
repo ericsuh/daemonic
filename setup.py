@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name='daemonic',
-    version='0.5',
+    version='0.6',
     description='Properly set up UNIX daemon processes',
     author='Eric Suh',
     author_email='contact@ericsuh.com',
