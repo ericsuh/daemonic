@@ -33,7 +33,6 @@ class daemon(object):
         else:                  self.stdout = devnull
         if stderr is not None: self.stderr = stderr.fileno()
         else:                  self.stderr = self.stdout
-        os.close(devnull)
 
     def __enter__(self):
         self.daemonize()
