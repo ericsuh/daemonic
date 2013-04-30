@@ -66,9 +66,9 @@ class daemon(object):
         sys.stdin.flush()
         sys.stdout.flush()
         sys.stderr.flush()
-        os.dup2(stdin, sys.stdin.fileno())
-        os.dup2(stdout, sys.stdout.fileno())
-        os.dup2(stderr, sys.stderr.fileno())
+        os.dup2(self.stdin, sys.stdin.fileno())
+        os.dup2(self.stdout, sys.stdout.fileno())
+        os.dup2(self.stderr, sys.stderr.fileno())
 
         # Create PID file
         if self.pidfile is not None:
