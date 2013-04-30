@@ -12,7 +12,7 @@ setup(
     description='Properly set up UNIX daemon processes',
     author='Eric Suh',
     author_email='contact@ericsuh.com',
-    packages=['daemonic', 'daemonic.pidfile']
+    packages=['daemonic'],
     provides=['daemonic'],
     test_suite = 'tests.test_suite',
     url='http://github.com/ericsuh/daemonic',
