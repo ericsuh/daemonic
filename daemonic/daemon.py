@@ -1,4 +1,5 @@
 # Copyright 2013 by Eric Suh
+# Copyright (c) 2013 Theo Crevon 
 # This code is freely licensed under the MIT license found at
 # <http://opensource.org/licenses/MIT>
 
