@@ -1,4 +1,5 @@
 # Copyright 2013 by Eric Suh
+# Copyright (c) 2013 Theo Crevon 
 # This code is freely licensed under the MIT license found at
 # <http://opensource.org/licenses/MIT>
 
@@ -27,13 +28,9 @@ class daemon(object):
         self.umask = umask
 
         devnull = os.open(os.devnull, os.O_RDWR)
-        if stdin is not None:  self.stdin = stdin.fileno()
-        else:                  self.stdin = devnull
-        if stdout is not None: self.stdout = stdout.fileno()
-        else:                  self.stdout = devnull
-        if stderr is not None: self.stderr = stderr.fileno()
-        else:                  self.stderr = self.stdout
-        os.close(devnull)
+        self.stdin = stdin.fileno() if stdin is not None else devnull
+        self.stdout = stdout.fileno() if stdout is not None else devnull
+        self.stderr = stderr.fileno() if stderr is not None else self.stdout
 
     def __enter__(self):
         self.daemonize()
@@ -66,16 +63,16 @@ class daemon(object):
         sys.stdin.flush()
         sys.stdout.flush()
         sys.stderr.flush()
-        os.dup2(stdin, sys.stdin.fileno())
-        os.dup2(stdout, sys.stdout.fileno())
-        os.dup2(stderr, sys.stderr.fileno())
+        os.dup2(self.stdin, sys.stdin.fileno())
+        os.dup2(self.stdout, sys.stdout.fileno())
+        os.dup2(self.stderr, sys.stderr.fileno())
 
         # Create PID file
         if self.pidfile is not None:
             pid = str(os.getpid())
             try:
                 pidfile.make_pidfile(self.pidfile, pid)
-            except PIDFileError as e:
+            except pidfile.PIDFileError as e:
                 sys.stederr.write('Creating PID file failed. ({})'.format(e))
                 os._exit(os.EX_OSERR)
         atexit.register(self.stop)
