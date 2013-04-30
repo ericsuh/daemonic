@@ -27,12 +27,9 @@ class daemon(object):
         self.umask = umask
 
         devnull = os.open(os.devnull, os.O_RDWR)
-        if stdin is not None:  self.stdin = stdin.fileno()
-        else:                  self.stdin = devnull
-        if stdout is not None: self.stdout = stdout.fileno()
-        else:                  self.stdout = devnull
-        if stderr is not None: self.stderr = stderr.fileno()
-        else:                  self.stderr = self.stdout
+        self.stdin = stdin.fileno() if stdin is not None else devnull
+        self.stdout = stdout.fileno() if stdout is not None else devnull
+        self.stderr = stderr.fileno() if stderr is not None else self.stdout
 
     def __enter__(self):
         self.daemonize()
