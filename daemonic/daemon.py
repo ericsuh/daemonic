@@ -75,7 +75,7 @@ class daemon(object):
             pid = str(os.getpid())
             try:
                 pidfile.make_pidfile(self.pidfile, pid)
-            except PIDFileError as e:
+            except pidfile.PIDFileError as e:
                 sys.stederr.write('Creating PID file failed. ({})'.format(e))
                 os._exit(os.EX_OSERR)
         atexit.register(self.stop)
